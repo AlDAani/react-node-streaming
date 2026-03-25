@@ -1,0 +1,9 @@
+export const DEFAULT_JSON_LIMIT = '16kb';
+export const STREAM_CHUNK_SIZE = 72;
+export const STREAM_INTERVAL_MS = 25;
+export const MAX_JOBS_LIST_LIMIT = 100;
+export const DEFAULT_JOBS_LIST_LIMIT = 20;
+export const MAX_SEARCH_LENGTH = 80;
+export const MAX_FILTER_LENGTH = 60;
+export const MAX_JOB_INPUT_LENGTH = 200;
+export const DEFAULT_JOB_INPUT = 'Generated async task';

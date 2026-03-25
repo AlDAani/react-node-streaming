@@ -1,0 +1,3 @@
+pnpm --filter presight-frontend check:forbidden-i18n
+pnpm --filter presight-frontend lint
+pnpm --filter presight-frontend typecheck

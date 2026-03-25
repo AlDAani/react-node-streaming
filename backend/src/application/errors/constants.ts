@@ -1,0 +1,8 @@
+export const APPLICATION_ERROR_CODES = {
+  SERVER_SHUTTING_DOWN: 'SERVER_SHUTTING_DOWN',
+  JOB_NOT_FOUND: 'JOB_NOT_FOUND',
+  QUEUE_FULL: 'QUEUE_FULL',
+} as const;
+
+export type TApplicationErrorCode =
+  (typeof APPLICATION_ERROR_CODES)[keyof typeof APPLICATION_ERROR_CODES];

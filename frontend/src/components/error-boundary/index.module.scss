@@ -1,0 +1,51 @@
+.Error-boundary {
+  border: 1px solid #f5b5c0;
+  background: #fff3f6;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.Error-boundary__title {
+  margin: 0;
+  color: #7d1030;
+}
+
+.Error-boundary__description {
+  margin: 0;
+  color: #6d1d34;
+}
+
+.Error-boundary__details {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #efc4ce;
+  background: #fffbfc;
+  color: #81203e;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.Error-boundary__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.Error-boundary__button {
+  border: 1px solid #b3375d;
+  background: #ffe7ef;
+  color: #5f102b;
+  border-radius: 8px;
+  padding: 0.42rem 0.7rem;
+  cursor: pointer;
+}
+
+.Error-boundary__button--secondary {
+  border-color: #d2dbe8;
+  background: #f4f7fb;
+  color: #304760;
+}

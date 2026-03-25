@@ -1,0 +1,97 @@
+.Queue-worker-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--gray-12);
+  }
+
+  &__subtitle {
+    margin: 0;
+    color: var(--gray-11);
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__action-button {
+    border: 1px solid var(--accent-8);
+    background: var(--accent-3);
+    color: var(--accent-11);
+    border-radius: 8px;
+    padding: 7px 10px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__socket-status {
+    width: fit-content;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 14.4px;
+    margin: 0;
+  }
+
+  &__socket-status--ok {
+    color: var(--green-11);
+    background: var(--green-3);
+  }
+
+  &__socket-status--warning {
+    color: var(--amber-11);
+    background: var(--amber-3);
+  }
+
+  &__socket-note {
+    margin: -8px 0 0;
+    color: var(--amber-11);
+  }
+
+  &__error-block {
+    border: 1px solid var(--red-7);
+    background: var(--red-3);
+    color: var(--red-11);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0;
+  }
+
+  &__table-wrapper {
+    overflow: auto;
+    border: 1px solid var(--gray-6);
+    border-radius: 8px;
+    background: var(--gray-1);
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 8.8px;
+      border-bottom: 1px solid var(--gray-5);
+      text-align: left;
+      color: var(--gray-12);
+    }
+
+    th {
+      background: var(--gray-2);
+      color: var(--gray-11);
+    }
+  }
+}

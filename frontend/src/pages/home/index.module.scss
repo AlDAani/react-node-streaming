@@ -1,0 +1,57 @@
+.Home-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--gray-12);
+  }
+
+  &__subtitle {
+    margin: 0;
+    color: var(--gray-11);
+  }
+
+  &__feature-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  &__feature-card {
+    border: 1px solid var(--gray-6);
+    border-radius: 10px;
+    padding: 14px;
+    text-decoration: none;
+    background: var(--gray-2);
+    transition:
+      border-color 120ms ease,
+      background-color 120ms ease,
+      box-shadow 120ms ease;
+
+    &:hover,
+    &:focus-visible {
+      border-color: var(--accent-7);
+      background: var(--accent-3);
+      box-shadow: 0 0 0 1px var(--accent-6);
+      outline: none;
+    }
+  }
+
+  &__feature-title {
+    margin: 0 0 6px;
+    color: var(--gray-12);
+  }
+
+  &__feature-description {
+    margin: 0;
+    color: var(--gray-11);
+  }
+}

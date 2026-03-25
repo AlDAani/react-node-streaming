@@ -1,0 +1,61 @@
+.Profiles-filters-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__field-label {
+    margin: 0;
+  }
+
+  &__input {
+    inline-size: 100%;
+  }
+
+  &__filter-group {
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__filter-title {
+    margin: 0;
+  }
+
+  &__filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 250px;
+    overflow: auto;
+  }
+
+  &__filter-item {
+    inline-size: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+  }
+
+  &__filter-item-value {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (width <= 980px) {
+  .Profiles-filters-sidebar {
+    &__filter-list {
+      max-height: 180px;
+    }
+  }
+}

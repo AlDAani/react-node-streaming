@@ -1,0 +1,44 @@
+.Stream-reader-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__subtitle {
+    margin: 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__output {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__output-title {
+    margin: 0;
+  }
+
+  &__output-scroll {
+    max-height: 260px;
+  }
+
+  &__output-text {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+}

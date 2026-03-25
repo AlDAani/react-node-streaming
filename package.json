@@ -1,17 +1,26 @@
 {
   "name": "presight-execise",
   "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.17.1",
   "repository": "",
   "author": "",
   "license": "MIT",
   "workspaces": [
-    "client",
-    "server"
+    "frontend",
+    "backend"
   ],
   "scripts": {
-    "start": "lerna run start"
+    "start": "node scripts/run-workspaces.js start --parallel",
+    "dev": "pnpm run start",
+    "start:backend": "pnpm --filter presight-backend start",
+    "start:frontend": "pnpm --filter presight-frontend --if-present start",
+    "build": "node scripts/run-workspaces.js build",
+    "test": "node scripts/run-workspaces.js test",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "~9.1.7",
     "lerna": "~8.2.1"
   }
 }

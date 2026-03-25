@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -e
+
+echo "🔍 Running pre-commit checks..."
+
+# Check if frontend files are staged
+if git diff --cached --name-only | grep -q "^frontend/"; then
+  echo "📦 Frontend changes detected, running checks..."
+
+  cd frontend
+
+  # Run ESLint fix
+  echo "🔷 Running ESLint fix..."
+  pnpm run lint:fix
+  git add src
+
+  # Run ESLint check
+  echo "🔷 Running ESLint check..."
+  pnpm run lint
+
+  # Run TypeScript check
+  echo "🔷 Checking TypeScript..."
+  pnpm run typecheck
+
+  # Run Prettier check
+  echo "🔷 Checking formatting..."
+  pnpm run format:check
+
+  # Run build check
+  echo "🔷 Checking build..."
+  pnpm run build
+
+  cd ..
+
+  echo "✅ All frontend checks passed!"
+fi
+
+echo "✅ Pre-commit checks completed!"

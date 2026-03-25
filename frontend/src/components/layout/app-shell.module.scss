@@ -1,0 +1,105 @@
+.App-shell {
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.App-shell__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid #d3e0ef;
+  background: rgb(255 255 255 / 80%);
+}
+
+.App-shell__title {
+  margin: 0;
+}
+
+.App-shell__subtitle {
+  margin: 0.35rem 0 0;
+  color: #4c6480;
+}
+
+.App-shell__language-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 180px;
+}
+
+.App-shell__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: min(320px, 100%);
+}
+
+.App-shell__language-select {
+  border-radius: 8px;
+  border: 1px solid #b3c6dc;
+  padding: 0.45rem 0.5rem;
+  background: #fff;
+}
+
+.App-shell__body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.App-shell__nav {
+  border: 1px solid #d3e0ef;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 80%);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  height: fit-content;
+}
+
+.App-shell__nav-link {
+  border-radius: 8px;
+  padding: 0.55rem 0.65rem;
+  text-decoration: none;
+  color: #15314f;
+}
+
+.App-shell__nav-link:hover {
+  background: #eef5ff;
+}
+
+.App-shell__nav-link--active {
+  background: #d8e8ff;
+  font-weight: 600;
+}
+
+.App-shell__main {
+  border: 1px solid #d3e0ef;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 80%);
+  padding: 1rem;
+}
+
+@media (width <= 860px) {
+  .App-shell__header {
+    flex-direction: column;
+  }
+
+  .App-shell__controls {
+    width: 100%;
+  }
+
+  .App-shell__body {
+    grid-template-columns: 1fr;
+  }
+
+  .App-shell__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

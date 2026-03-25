@@ -1,0 +1,105 @@
+.Profiles-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__virtual-viewport {
+    block-size: min(72vh, 760px);
+    overflow: auto;
+    border: 1px solid var(--gray-6);
+    border-radius: 12px;
+    background: var(--gray-2);
+    padding: 12px;
+  }
+
+  &__virtual-content {
+    position: relative;
+  }
+
+  &__card {
+    position: absolute;
+    inset-inline: 0;
+  }
+
+  &__card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+
+  &__card-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 14px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--gray-4);
+  }
+
+  &__card-content {
+    min-width: 0;
+  }
+
+  &__card-title {
+    margin: 0;
+  }
+
+  &__card-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 12px;
+    margin-top: 9px;
+  }
+
+  &__card-meta {
+    margin: 0;
+  }
+
+  &__card-meta-label {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  &__card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  &__card-hobbies-label {
+    margin: 0;
+  }
+
+  &__card-hobbies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  &__loading-more {
+    margin: 0;
+    text-align: center;
+  }
+}
+
+@media (width <= 640px) {
+  .Profiles-results-list {
+    &__card-header {
+      align-items: flex-start;
+    }
+
+    &__card-meta-grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__virtual-viewport {
+      block-size: min(68vh, 620px);
+      padding: 8px;
+    }
+  }
+}

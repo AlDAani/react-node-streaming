@@ -1,0 +1,46 @@
+.Profiles-status-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__skeleton-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  &__loading-text {
+    margin: 0;
+  }
+
+  &__skeleton-item {
+    padding: 12px;
+  }
+
+  &__skeleton-line {
+    display: block;
+    inline-size: 100%;
+    block-size: 11px;
+  }
+
+  &__skeleton-line--title {
+    inline-size: 40%;
+    block-size: 16px;
+  }
+
+  &__skeleton-line--short {
+    inline-size: 65%;
+  }
+
+  &__error-block {
+    border: 1px solid var(--red-7);
+    background: var(--red-2);
+  }
+
+  &__error-text {
+    margin: 0;
+  }
+
+  &__empty {
+    margin: 0;
+  }
+}
