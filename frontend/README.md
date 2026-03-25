@@ -1,51 +1,160 @@
-# Frontend App
+# Presight Frontend
 
-## Frontend Architecture
+React + Vite frontend. It includes:
 
-This frontend app mirrors the `supp-plan` layering style while staying lightweight for MVP delivery.
+- Route-based pages (`home`, `profiles`, `stream-reader`, `queue-worker`)
+- RTK Query API layer
+- i18next localization
+- Radix UI Theme components
+- PWA support (service worker + install/update handling)
 
-### Layers
+## Tech Stack
 
-- `src/index.tsx`: bootstrap and provider composition.
-- `src/components/app`: app root composition (`AppShell` + `RootComponents` + route outlet).
-- `src/components/root-components`: global UI host placeholders and network banner.
-- `src/pages/routes.ts` + `src/pages/*/route.ts`: route registry and per-page route modules.
-- `src/pages/*/index.tsx`: page entry modules.
-- `src/i18n` + `src/constants/i18next`: centralized i18next config/constants.
-- `src/assets/i18next`: locale dictionaries (`en`, `ar-AE`).
-- `src/api`: RTK Query modules (`baseApi` + feature endpoint slices).
-- `src/store`: Redux store setup and RTK Query middleware.
+- React 19
+- TypeScript (strict)
+- Vite 6
+- `@reduxjs/toolkit` + RTK Query
+- `react-router-dom`
+- `@radix-ui/themes`
+- `sass` (SCSS modules)
+- `vitest` + Testing Library
+- `vite-plugin-pwa`
 
-### i18n Rules
+## Requirements
 
-- Do not use `react-i18next` hooks/components (`useTranslation`, `Trans`, `withTranslation`).
-- Components must use constants-based keys: `i18next.t(SOME_TRANSLATIONS.key)`.
-- API/backend error messages are translated through `requestTranslateFunction(key, options?)`.
-- Locale switcher updates both language and document `dir` for RTL/LTR.
+- Node.js 20+ (recommended)
+- pnpm 9+
 
-### MVP Pages
+## Local Development
 
-- `home`: navigation hub.
-- `profiles`: list/search/filter/load-more state.
-- `stream-reader`: text stream rendering one character at a time.
-- `queue-worker`: 20-request queue flow with websocket updates.
+Install dependencies:
 
-### Thin API Boundary
+```bash
+pnpm install
+```
 
-- `src/api/base`: shared `baseApi` + request error normalization.
-- `src/api/profiles`, `src/api/stream`, `src/api/queue`: feature-level RTK Query modules.
-- `src/api/queue/socket.ts`: websocket bridge for queue result events.
+Start dev server:
 
-The current implementation is intentionally simple and ready for incremental backend alignment.
+```bash
+pnpm dev
+```
 
-## PWA Installability
+Default frontend URL: `http://127.0.0.1:5173`
 
-- PWA setup is handled by `vite-plugin-pwa`, not a hand-written service worker.
-- Installability works best on `localhost` or over HTTPS.
-- Chromium-based browsers may show the native browser install affordance when the installability criteria are met.
-- Safari/iOS does not reliably fire `beforeinstallprompt`, so installation is expected through the browser/share menu.
-- To verify PWA behavior:
-  - run `pnpm --filter presight-frontend build`
-  - serve the app and open Chrome DevTools > Application
-  - confirm `manifest`, service worker, and installability checks are present
-  - test update prompting by refreshing after a new build
+Dev proxy is configured to backend at `http://127.0.0.1:4000` for:
+
+- `/health`
+- `/api`
+- `/socket.io` (WebSocket)
+
+## Environment Variables
+
+Create `.env.local` (optional):
+
+```bash
+VITE_API_BASE_URL=
+```
+
+Notes:
+
+- In development, empty `VITE_API_BASE_URL` works with Vite proxy.
+- In non-proxy environments, set `VITE_API_BASE_URL` to backend origin (for example `https://api.example.com`).
+
+## Scripts
+
+- `pnpm dev` / `pnpm start`: run Vite dev server
+- `pnpm build`: production build
+- `pnpm preview`: preview built app
+- `pnpm typecheck`: TypeScript checks
+- `pnpm lint`: ESLint checks
+- `pnpm lint:fix`: ESLint autofix
+- `pnpm format:check`: Prettier check
+- `pnpm test`: run Vitest once
+- `pnpm test:watch`: run Vitest in watch mode
+- `pnpm check:forbidden-i18n`: guard against forbidden i18n API usage
+
+## Project Structure
+
+```text
+src/
+  api/            # RTK Query base + feature APIs (profiles, queue, stream)
+  assets/         # static assets and i18n dictionary files
+  components/     # shared UI/shell/error boundary
+  constants/      # routes and i18n constants
+  i18n/           # i18next setup + locale helpers
+  pages/          # page modules and route definitions
+  pwa/            # service worker registration + install/update context
+  routing/        # router creation
+  store/          # Redux store configuration
+  styles/         # global styles
+```
+
+## Routing
+
+Routes are registered in `src/pages/routes.ts` and assembled in `src/routing/create-app-router.ts`.
+
+Current pages:
+
+- `/` (home)
+- `/profiles`
+- `/stream-reader`
+- `/queue-worker`
+
+Each page exposes a `route.ts` module with lazy loading + i18n metadata.
+
+## Data Flow
+
+- `src/api/base/base-api.ts`: RTK Query root API.
+- `src/api/base/base-query.ts`: shared fetch base query + normalized error mapping.
+- Feature APIs (`profiles`, `queue`, `stream`) inject endpoints into `baseApi`.
+- Redux store (`src/store/index.ts`) includes RTK Query reducer and middleware.
+
+## i18n Conventions
+
+- i18next is initialized before render in `src/index.tsx`.
+- Locale context/provider is in `src/pages/components/i18next-provider`.
+- Project uses translation key constants (for example `PROFILES_TRANSLATIONS`) instead of inline key strings.
+- `pnpm check:forbidden-i18n` enforces the i18n usage policy.
+
+## Styling
+
+- Global styles: `src/styles/global.scss`
+- Page/component styles: `*.module.scss`
+- UI primitives: `@radix-ui/themes`
+- Prefer Radix theme tokens/CSS variables in module styles.
+
+## PWA
+
+PWA is configured in `vite.config.ts` using `vite-plugin-pwa` with `generateSW`.
+
+Implemented features:
+
+- Manifest and icons
+- Runtime caching strategy
+- Install prompt support
+- Service worker update detection and apply flow
+
+Provider: `src/pwa/pwa-provider.tsx`
+
+## Testing
+
+Run all tests:
+
+```bash
+pnpm test
+```
+
+Run one test file:
+
+```bash
+pnpm test -- src/pages/profiles/infinite-scroll.test.tsx
+```
+
+## Build
+
+```bash
+pnpm build
+pnpm preview
+```
+
+Output is generated to `dist/`.
