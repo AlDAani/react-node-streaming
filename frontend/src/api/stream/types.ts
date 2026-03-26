@@ -13,9 +13,19 @@ export type StreamEvent =
       error: ApiBaseError;
     };
 
+export type EventSourceListener = (event: Event | MessageEvent<string>) => void;
+
+export type EventSourceLike = {
+  addEventListener: (type: string, listener: EventSourceListener) => void;
+  removeEventListener: (type: string, listener: EventSourceListener) => void;
+  close: () => void;
+};
+
+export type EventSourceFactory = (url: string, init?: EventSourceInit) => EventSourceLike;
+
 export type OpenStreamTextParams = {
   signal?: AbortSignal;
   endpoint?: string;
-  fetchImpl?: typeof fetch;
+  eventSourceFactory?: EventSourceFactory;
   onEvent: (event: StreamEvent) => void;
 };

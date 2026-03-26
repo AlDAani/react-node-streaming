@@ -26,10 +26,14 @@ test('module routes are registered and respond', async () => {
     const health = await fetch(`${baseUrl}${API_ROUTES.HEALTH}`);
     const profiles = await fetch(`${baseUrl}${API_ROUTES.PROFILES}`);
     const stream = await fetch(`${baseUrl}${API_ROUTES.STREAM_TEXT}`);
+    const streamBody = await stream.text();
 
     assert.equal(health.status, 200);
     assert.equal(profiles.status, 200);
     assert.equal(stream.status, 200);
+    assert.match(stream.headers.get('content-type') ?? '', /text\/event-stream/);
+    assert.match(streamBody, /event: delta/);
+    assert.match(streamBody, /event: done/);
   } finally {
     await runtime.close();
   }

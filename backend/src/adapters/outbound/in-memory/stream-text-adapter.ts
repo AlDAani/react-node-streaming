@@ -10,6 +10,10 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function createServerSentEvent(event: string, payload: Record<string, unknown>): string {
+  return `event: ${event}\ndata: ${JSON.stringify(payload)}\n\n`;
+}
+
 function waitDrainOrClose(req: IReadableStreamRequest, res: IWritableStreamResponse): Promise<'drain' | 'close'> {
   return new Promise((resolve) => {
     let isSettled = false;
@@ -55,7 +59,11 @@ export class InMemoryStreamTextAdapter implements StreamTextPort {
       const chunk = text.slice(cursor, cursor + STREAM_CHUNK_SIZE);
       cursor += STREAM_CHUNK_SIZE;
 
-      const writable = res.write(chunk);
+      const writable = res.write(
+        createServerSentEvent('delta', {
+          delta: chunk,
+        }),
+      );
       if (!writable) {
         const event = await waitDrainOrClose(req, res);
         if (isClosed || event === 'close') {
@@ -66,6 +74,10 @@ export class InMemoryStreamTextAdapter implements StreamTextPort {
       if (STREAM_INTERVAL_MS > 0) {
         await sleep(STREAM_INTERVAL_MS);
       }
+    }
+
+    if (!isClosed && !res.writableEnded) {
+      res.write(createServerSentEvent('done', {}));
     }
 
     if (!res.writableEnded) {
