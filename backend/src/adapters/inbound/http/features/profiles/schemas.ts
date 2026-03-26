@@ -16,13 +16,13 @@ function parseInteger(value: unknown, fallback: number): number {
 }
 
 export function validateListProfilesQuery(query: Request['query'], config: IServerConfig): IListProfilesParams {
-  const cursor = parseInteger(query.cursor, 0);
+  const offset = parseInteger(query.offset, 0);
   const limit = parseInteger(query.limit, config.pageSizeDefault);
   const ageMin = query.ageMin === undefined ? null : parseInteger(query.ageMin, 0);
   const ageMax = query.ageMax === undefined ? null : parseInteger(query.ageMax, 0);
 
-  if (!Number.isInteger(cursor) || cursor < 0) {
-    throw new ApiError(400, 'INVALID_CURSOR', 'cursor must be a non-negative integer.');
+  if (!Number.isInteger(offset) || offset < 0) {
+    throw new ApiError(400, 'INVALID_OFFSET', 'offset must be a non-negative integer.');
   }
 
   if (!Number.isInteger(limit) || limit < 1 || limit > config.pageSizeMax) {
@@ -42,7 +42,7 @@ export function validateListProfilesQuery(query: Request['query'], config: IServ
   }
 
   return {
-    cursor,
+    offset,
     limit,
     search: typeof query.search === 'string' ? query.search.slice(0, MAX_SEARCH_LENGTH) : '',
     nationality: typeof query.nationality === 'string' ? query.nationality.slice(0, MAX_FILTER_LENGTH) : '',

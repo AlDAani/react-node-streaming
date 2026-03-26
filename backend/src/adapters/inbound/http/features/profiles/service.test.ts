@@ -8,7 +8,7 @@ test('ProfilesService returns paginated profile results', () => {
   const service = new ProfilesService(profiles);
 
   const result = service.listProfiles({
-    cursor: 0,
+    offset: 0,
     limit: 5,
     search: '',
     nationality: '',

@@ -51,7 +51,7 @@ export class InMemoryProfilesReadAdapter implements ProfilesReadPort {
     this.facetCache = this.buildFacetCache(seedProfiles);
   }
 
-  list({ cursor, limit, search, nationality, hobby, ageMin, ageMax }: IListProfilesQuery): IListProfilesResult {
+  list({ offset, limit, search, nationality, hobby, ageMin, ageMax }: IListProfilesQuery): IListProfilesResult {
     const normalizedSearch = search.trim().toLowerCase();
     const normalizedNationality = nationality.trim().toLowerCase();
     const normalizedHobby = hobby.trim().toLowerCase();
@@ -63,14 +63,14 @@ export class InMemoryProfilesReadAdapter implements ProfilesReadPort {
       ageMax !== null;
 
     if (!hasActiveFilters) {
-      const items = this.profiles.slice(cursor, cursor + limit);
-      const nextCursor = cursor + items.length;
+      const items = this.profiles.slice(offset, offset + limit);
+      const nextOffset = offset + items.length;
 
       return {
         items,
         total: this.profilesCount,
-        nextCursor: nextCursor < this.profilesCount ? nextCursor : null,
-        hasMore: nextCursor < this.profilesCount,
+        nextOffset: nextOffset < this.profilesCount ? nextOffset : null,
+        hasMore: nextOffset < this.profilesCount,
       };
     }
 
@@ -123,18 +123,18 @@ export class InMemoryProfilesReadAdapter implements ProfilesReadPort {
       const matchIndex = totalMatches;
       totalMatches += 1;
 
-      if (matchIndex >= cursor && items.length < limit) {
+      if (matchIndex >= offset && items.length < limit) {
         items.push(profile);
       }
     }
 
-    const nextCursor = cursor + items.length;
+    const nextOffset = offset + items.length;
 
     return {
       items,
       total: totalMatches,
-      nextCursor: nextCursor < totalMatches ? nextCursor : null,
-      hasMore: nextCursor < totalMatches,
+      nextOffset: nextOffset < totalMatches ? nextOffset : null,
+      hasMore: nextOffset < totalMatches,
     };
   }
 

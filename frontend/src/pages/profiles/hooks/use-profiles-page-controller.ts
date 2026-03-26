@@ -20,6 +20,7 @@ import {
 import { PROFILES_TRANSLATIONS } from '../constants/translations';
 
 export type ProfileVirtualRow = {
+  index: number;
   key: string | number;
   profile: Profile;
   start: number;
@@ -81,26 +82,22 @@ export const useProfilesPageController = (): ProfilesPageController => {
 
   const listViewportRef = useRef<HTMLDivElement | null>(null);
   const pendingNextPageRef = useRef<number | null>(null);
+  const goToFirstPage = useCallback(() => {
+    setPage((currentPage) => (currentPage === 1 ? currentPage : 1));
+  }, []);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
       setDebouncedSearchInput(searchInput);
+      goToFirstPage();
     }, SEARCH_DEBOUNCE_MS);
 
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [searchInput]);
+  }, [goToFirstPage, searchInput]);
 
   const debouncedSearch = debouncedSearchInput.trim();
-
-  const resetToFirstPage = useCallback(() => {
-    setPage((currentPage) => (currentPage === 1 ? currentPage : 1));
-  }, []);
-
-  useEffect(() => {
-    resetToFirstPage();
-  }, [debouncedSearch, selectedNationality, selectedHobby, resetToFirstPage]);
 
   const queryParams = useMemo(
     () => ({
@@ -232,11 +229,13 @@ export const useProfilesPageController = (): ProfilesPageController => {
 
   const handleNationalitySelect = useCallback((value: string) => {
     setSelectedNationality((currentValue) => (currentValue === value ? currentValue : value));
-  }, []);
+    goToFirstPage();
+  }, [goToFirstPage]);
 
   const handleHobbySelect = useCallback((value: string) => {
     setSelectedHobby((currentValue) => (currentValue === value ? currentValue : value));
-  }, []);
+    goToFirstPage();
+  }, [goToFirstPage]);
 
   const rows = useMemo<ProfileVirtualRow[]>(
     () =>
@@ -249,6 +248,7 @@ export const useProfilesPageController = (): ProfilesPageController => {
 
         return [
           {
+            index: virtualRow.index,
             key: String(virtualRow.key),
             profile,
             start: virtualRow.start,

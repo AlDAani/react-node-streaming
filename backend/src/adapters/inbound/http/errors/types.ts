@@ -1,4 +1,4 @@
-import type { IApiErrorEnvelope } from '../@/application/contracts';
+import type { IApiErrorEnvelope } from '@/application/contracts';
 
 export interface IApiErrorPayload extends IApiErrorEnvelope {}
 

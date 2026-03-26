@@ -13,7 +13,7 @@ test('createProfiles creates deterministic list', () => {
 test('ProfileRepository list supports filters and pagination', () => {
   const repository = new InMemoryProfilesReadAdapter(createProfiles(50));
   const list = repository.list({
-    cursor: 0,
+    offset: 0,
     limit: 5,
     search: 'avery',
     nationality: '',
@@ -30,7 +30,7 @@ test('ProfileRepository list supports filters and pagination', () => {
 test('ProfileRepository list uses fast path when filters are empty', () => {
   const repository = new InMemoryProfilesReadAdapter(createProfiles(12));
   const list = repository.list({
-    cursor: 5,
+    offset: 5,
     limit: 4,
     search: '',
     nationality: '',
@@ -44,14 +44,14 @@ test('ProfileRepository list uses fast path when filters are empty', () => {
     ['profile-0006', 'profile-0007', 'profile-0008', 'profile-0009'],
   );
   assert.equal(list.total, 12);
-  assert.equal(list.nextCursor, 9);
+  assert.equal(list.nextOffset, 9);
   assert.equal(list.hasMore, true);
 });
 
 test('ProfileRepository list supports case-insensitive exact filters and age ranges', () => {
   const repository = new InMemoryProfilesReadAdapter(createProfiles(80));
   const list = repository.list({
-    cursor: 0,
+    offset: 0,
     limit: 10,
     search: '',
     nationality: 'canadian',
@@ -73,10 +73,10 @@ test('ProfileRepository list supports case-insensitive exact filters and age ran
   );
 });
 
-test('ProfileRepository list returns empty page when cursor is beyond total', () => {
+test('ProfileRepository list returns empty page when offset is beyond total', () => {
   const repository = new InMemoryProfilesReadAdapter(createProfiles(10));
   const list = repository.list({
-    cursor: 99,
+    offset: 99,
     limit: 5,
     search: '',
     nationality: '',
@@ -87,7 +87,7 @@ test('ProfileRepository list returns empty page when cursor is beyond total', ()
 
   assert.deepEqual(list.items, []);
   assert.equal(list.total, 10);
-  assert.equal(list.nextCursor, null);
+  assert.equal(list.nextOffset, null);
   assert.equal(list.hasMore, false);
 });
 

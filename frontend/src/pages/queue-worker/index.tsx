@@ -314,7 +314,6 @@ export const QueueWorkerPage = () => {
           return false;
         }
 
-        // Queue state is controlled by socket events; initial request only registers requestId.
         updateRow({
           clientId: row.clientId,
           status: 'pending',

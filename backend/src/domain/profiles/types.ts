@@ -9,7 +9,7 @@ export interface IProfile {
 }
 
 export interface IListProfilesQuery {
-  cursor: number;
+  offset: number;
   limit: number;
   search: string;
   nationality: string;
@@ -21,7 +21,7 @@ export interface IListProfilesQuery {
 export interface IListProfilesResult {
   items: IProfile[];
   total: number;
-  nextCursor: number | null;
+  nextOffset: number | null;
   hasMore: boolean;
 }
 

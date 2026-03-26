@@ -70,12 +70,14 @@ test('profiles endpoint supports search and pagination', async () => {
   const { runtime, baseUrl } = await startRuntime();
 
   try {
-    const response = await fetch(`${baseUrl}${API_ROUTES.PROFILES}?search=avery&limit=4`);
+    const response = await fetch(`${baseUrl}${API_ROUTES.PROFILES}?search=avery&offset=0&limit=4`);
     assert.equal(response.status, 200);
 
     const payload = await response.json();
     assert.equal(payload.data.length, 4);
+    assert.equal(payload.meta.pagination.offset, 0);
     assert.equal(payload.meta.pagination.limit, 4);
+    assert.equal(typeof payload.meta.pagination.nextOffset === 'number', true);
   } finally {
     await runtime.close();
   }

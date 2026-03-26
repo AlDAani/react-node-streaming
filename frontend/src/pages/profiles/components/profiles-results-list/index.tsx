@@ -42,7 +42,12 @@ export const ProfilesResultsList = ({
                 key={row.key}
                 ref={measureElement}
                 size="2"
+                data-index={row.index}
                 style={{
+                  left: 0,
+                  position: 'absolute',
+                  right: 0,
+                  top: 0,
                   transform: `translateY(${row.start}px)`,
                 }}
               >

@@ -21,7 +21,7 @@ test('application contracts stay stable for jobs and profile listing input', () 
     clientId: 1,
   };
   const profileParams: IListProfilesParams = {
-    cursor: 0,
+    offset: 0,
     limit: 20,
     search: '',
     nationality: '',

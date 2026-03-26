@@ -4,7 +4,7 @@ export interface IJobPayload {
 }
 
 export interface IListProfilesParams {
-  cursor: number;
+  offset: number;
   limit: number;
   search: string;
   nationality: string;

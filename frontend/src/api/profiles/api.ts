@@ -4,9 +4,9 @@ import type { GetProfilesParams, ProfilesFacets, ProfilesResponse } from './type
 
 const buildProfilesSearchParams = (params: GetProfilesParams) => {
   const searchParams = new URLSearchParams();
-  const cursor = Math.max((params.page - 1) * params.pageSize, 0);
+  const offset = Math.max((params.page - 1) * params.pageSize, 0);
 
-  searchParams.set('cursor', String(cursor));
+  searchParams.set('offset', String(offset));
   searchParams.set('limit', String(params.pageSize));
 
   if (params.search) {

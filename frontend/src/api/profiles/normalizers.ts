@@ -57,6 +57,10 @@ const getNextPage = (record: Record<string, unknown>, params: GetProfilesParams)
   const metaRecord = asRecord(record.meta);
   const paginationRecord = asRecord(metaRecord.pagination);
 
+  if (typeof paginationRecord.nextOffset === 'number' && paginationRecord.nextOffset >= 0) {
+    return Math.floor(paginationRecord.nextOffset / params.pageSize) + 1;
+  }
+
   if (typeof paginationRecord.nextCursor === 'number' && paginationRecord.nextCursor >= 0) {
     return Math.floor(paginationRecord.nextCursor / params.pageSize) + 1;
   }

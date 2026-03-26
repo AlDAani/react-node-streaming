@@ -14,9 +14,9 @@ export function createListProfilesController(service: ProfilesService, config: I
       meta: {
         requestId: getRequestId(req),
         pagination: {
-          cursor: params.cursor,
+          offset: params.offset,
           limit: params.limit,
-          nextCursor: result.nextCursor,
+          nextOffset: result.nextOffset,
           hasMore: result.hasMore,
           total: result.total,
         },
